@@ -1,0 +1,39 @@
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+
+class MyAdapter(private val context: Context, private val items: List<String>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val editTextName: EditText = view.findViewById(R.id.editTextName)
+        val editTextAge: EditText = view.findViewById(R.id.editTextAge)
+        val buttonSubmit: Button = view.findViewById(R.id.buttonSubmit)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.buttonSubmit.setOnClickListener {
+            val name = holder.editTextName.text.toString()
+            val age = holder.editTextAge.text.toString()
+
+            if (name.isNotEmpty() && age.isNotEmpty()) {
+                Toast.makeText(context, "Nome: $name, Idade: $age", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+}
